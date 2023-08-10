@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Goal Tracker</title>
+</head>
+<body>
+  <h1>Today's Goals</h1>
+  <div>
+    <form id="addGoalForm" method="post" action="/add-goal">
+      <input type="text" id="goalInput" name="goal" placeholder="Enter a goal">
+      <button type="submit">Add Goal</button>
+    </form>
+  </div>
+  <div id="goalsList">
+    <% goals.forEach(function(goal) { %>
+      <div><%= goal.text %></div>
+    <% }); %>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
