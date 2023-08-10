@@ -79,6 +79,23 @@ app.get('/', (req, res) => {
   res.render('index', { goals, messages: req.flash('success') });
 });
 
+app.post('/delete-goal', (req, res) => {
+  const { goalId } = req.body;
+
+  // Read existing goals from JSON file
+  let goals = JSON.parse(fs.readFileSync(goalsFilePath, 'utf8'));
+
+  // Check if the goalId is within valid range
+  if (goalId >= 0 && goalId < goals.length) {
+    goals.splice(goalId, 1); // Remove the goal from the array
+    fs.writeFileSync(goalsFilePath, JSON.stringify(goals, null, 2)); // Update the JSON file
+    res.send({ success: true });
+  } else {
+    res.status(400).send({ error: 'Invalid goal ID' });
+  }
+});
+
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
