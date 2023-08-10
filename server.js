@@ -9,7 +9,8 @@ const app = express();
 const port = 3025;
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+// app.use(express.static('public'));
+app.use('/static', express.static('public'));
 
 // Setup express-session and connect-flash
 app.use(session({
