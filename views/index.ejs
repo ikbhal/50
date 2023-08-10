@@ -25,11 +25,12 @@
     <div id="goalsList">
       <% goals.forEach(function(goal, index) { %>
         <div class="flex items-center mb-2">
-          <input type="checkbox" class="mr-2" <%= goal.completed ? 'checked' : '' %> data-goal-id="<%= index %>" />
+          <input type="checkbox" class="mr-2" <%= goal['completed'] !== undefined && goal['completed'] ? 'checked' : '' %> data-goal-id="<%= index %>" />
           <span><%= index + 1 %>. <%= goal.text %></span>
         </div>
       <% }); %>
     </div>
+    
   </div>
   
   <script>
