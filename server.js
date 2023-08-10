@@ -22,17 +22,23 @@ app.use(flash());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Create 'goals.json' if it doesn't exist
+const goalsFilePath = path.join(__dirname, 'goals.json');
+if (!fs.existsSync(goalsFilePath)) {
+  fs.writeFileSync(goalsFilePath, '[]');
+}
+
 app.post('/add-goal', (req, res) => {
   const { goal } = req.body;
 
   // Read existing goals from JSON file
-  let goals = JSON.parse(fs.readFileSync('goals.json', 'utf8'));
+  let goals = JSON.parse(fs.readFileSync(goalsFilePath, 'utf8'));
 
   // Add the new goal to the list
   goals.push({ text: goal, date: new Date().toISOString() });
 
   // Update the JSON file with the new goals
-  fs.writeFileSync('goals.json', JSON.stringify(goals, null, 2));
+  fs.writeFileSync(goalsFilePath, JSON.stringify(goals, null, 2));
 
   req.flash('success', 'Goal added successfully.');
   res.redirect('/');
@@ -40,7 +46,7 @@ app.post('/add-goal', (req, res) => {
 
 app.get('/', (req, res) => {
   // Read goals from JSON file
-  const goals = JSON.parse(fs.readFileSync('goals.json', 'utf8'));
+  const goals = JSON.parse(fs.readFileSync(goalsFilePath, 'utf8'));
 
   // Render the EJS template and pass the goals and flash messages as data
   res.render('index', { goals, messages: req.flash('success') });
