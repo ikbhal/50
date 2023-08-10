@@ -12,8 +12,8 @@
     </form>
   </div>
   <div id="goalsList">
-    <% goals.forEach(function(goal) { %>
-      <div><%= goal.text %></div>
+    <% goals.forEach(function(goal, index) { %>
+      <div><%= index + 1 %>. <%= goal.text %></div>
     <% }); %>
   </div>
 
