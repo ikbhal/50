@@ -39,7 +39,7 @@ app.post('/add-goal', (req, res) => {
   let goals = JSON.parse(fs.readFileSync(goalsFilePath, 'utf8'));
 
   // Add the new goal to the list
-  goals.push({ text: goal, date: new Date().toISOString() });
+  goals.push({ text: goal, date: new Date().toISOString(), completed: false });
 
   // Update the JSON file with the new goals
   fs.writeFileSync(goalsFilePath, JSON.stringify(goals, null, 2));
