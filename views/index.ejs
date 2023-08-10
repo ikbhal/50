@@ -3,6 +3,7 @@
 <head>
   <title>My Goal Tracker</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body class="bg-gray-100">
   <div class="container mx-auto p-8">
@@ -30,6 +31,25 @@
       <% }); %>
     </div>
   </div>
-  <script src="/static/script.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+      $('input[type="checkbox"]').on('change', function() {
+        const goalId = $(this).data('goal-id');
+        $.ajax({
+          url: '/toggle-goal',
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({ goalId }),
+          success: function() {
+            // Handle success, if needed
+          },
+          error: function() {
+            // Handle error, if needed
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
