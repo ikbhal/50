@@ -33,23 +33,28 @@
   </div>
   
   <script>
-    $(document).ready(function() {
-      $('input[type="checkbox"]').on('change', function() {
-        const goalId = $(this).data('goal-id');
-        $.ajax({
-          url: '/toggle-goal',
-          method: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify({ goalId }),
-          success: function() {
-            // Handle success, if needed
-          },
-          error: function() {
-            // Handle error, if needed
-          }
-        });
-      });
+   $(document).ready(function() {
+  const currentDomain = window.location.origin; // Get the current domain
+
+  $('input[type="checkbox"]').on('change', function() {
+    const goalId = $(this).data('goal-id');
+    $.ajax({
+      url: currentDomain + '/toggle-goal', // Use the dynamically fetched domain
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({ goalId }),
+      success: function() {
+        // Reload the page on success
+        location.reload();
+      },
+      error: function() {
+        // Display an alert message on error
+        alert('An error occurred. Please try again later.');
+      }
     });
+  });
+});
+
   </script>
 </body>
 </html>
