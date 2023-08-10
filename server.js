@@ -44,6 +44,22 @@ app.post('/add-goal', (req, res) => {
   res.redirect('/');
 });
 
+app.post('/toggle-goal', (req, res) => {
+  const { goalId } = req.body;
+
+  // Read existing goals from JSON file
+  let goals = JSON.parse(fs.readFileSync(goalsFilePath, 'utf8'));
+
+  // Toggle the completion status of the goal
+  goals[goalId].completed = !goals[goalId].completed;
+
+  // Update the JSON file with the updated goals
+  fs.writeFileSync(goalsFilePath, JSON.stringify(goals, null, 2));
+
+  req.flash('success', 'Goal status updated successfully.');
+  res.redirect('/');
+});
+
 app.get('/', (req, res) => {
   // Read goals from JSON file
   const goals = JSON.parse(fs.readFileSync(goalsFilePath, 'utf8'));

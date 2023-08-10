@@ -2,21 +2,34 @@
 <html>
 <head>
   <title>My Goal Tracker</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-  <h1>Today's Goals</h1>
-  <div>
-    <form id="addGoalForm" method="post" action="/add-goal">
-      <input type="text" id="goalInput" name="goal" placeholder="Enter a goal">
-      <button type="submit">Add Goal</button>
-    </form>
-  </div>
-  <div id="goalsList">
-    <% goals.forEach(function(goal, index) { %>
-      <div><%= index + 1 %>. <%= goal.text %></div>
-    <% }); %>
-  </div>
+<body class="bg-gray-100">
+  <div class="container mx-auto p-8">
+    <h1 class="text-3xl font-semibold mb-4">Today's Goals</h1>
 
+    <div class="mt-4">
+      <% if (messages.length > 0) { %>
+        <div class="bg-green-300 text-green-800 p-2 rounded-md">
+          <%= messages[0] %>
+        </div>
+      <% } %>
+    </div>
+
+    <form id="addGoalForm" class="mb-4" method="post" action="/add-goal">
+      <input type="text" id="goalInput" name="goal" placeholder="Enter a goal" class="rounded-lg p-2 mr-2">
+      <button type="submit" class="bg-blue-500 text-white rounded-lg px-4 py-2">Add Goal</button>
+    </form>
+    
+    <div id="goalsList">
+      <% goals.forEach(function(goal, index) { %>
+        <div class="flex items-center mb-2">
+          <input type="checkbox" class="mr-2" <%= goal.completed ? 'checked' : '' %> data-goal-id="<%= index %>" />
+          <span><%= index + 1 %>. <%= goal.text %></span>
+        </div>
+      <% }); %>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
