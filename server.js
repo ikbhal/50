@@ -4,10 +4,12 @@ const ejs = require('ejs');
 const path = require('path');
 const session = require('express-session');
 const flash = require('connect-flash');
+const cors = require('cors');
 
 const app = express();
 const port = 3025;
 
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 // app.use(express.static('public'));
 app.use('/static', express.static('public'));
