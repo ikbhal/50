@@ -10,6 +10,7 @@ const app = express();
 const port = 3025;
 
 app.use(cors());
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(express.static('public'));
 app.use('/static', express.static('public'));
