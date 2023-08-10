@@ -51,8 +51,15 @@ app.post('/toggle-goal', (req, res) => {
   // Read existing goals from JSON file
   let goals = JSON.parse(fs.readFileSync(goalsFilePath, 'utf8'));
 
-  // Toggle the completion status of the goal
-  goals[goalId].completed = !goals[goalId].completed;
+  // Check if the goalId is within valid range
+  if (goalId >= 0 && goalId < goals.length) {
+    // Toggle the completion status of the goal using square brackets
+    // Assume 'completed' is false if it doesn't exist
+    goals[goalId]['completed '] = goals[goalId]['completed '] === undefined ? true : !goals[goalId]['completed '];
+  } else {
+    // Handle invalid goalId
+    req.flash('error', 'Invalid goal ID.');
+  }
 
   // Update the JSON file with the updated goals
   fs.writeFileSync(goalsFilePath, JSON.stringify(goals, null, 2));
